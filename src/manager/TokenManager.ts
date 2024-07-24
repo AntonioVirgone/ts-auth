@@ -1,7 +1,7 @@
 import { Log } from "../decorator/Log";
 import { TokenModel } from "../model/TokenModel";
 import { UserTokenModel } from "../model/UserTokenModel";
-import { generateRandomString } from "../utils/StringUtils";
+import { generateRandomString } from 'ts-av-common';
 
 export class TokenManager {
   private static instance: TokenManager;
