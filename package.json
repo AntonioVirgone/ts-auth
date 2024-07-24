@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
-    "ts-av-common": "^1.0.5"
+    "ts-av-common": "^1.0.13"
   },
   "devDependencies": {
     "@nestjs/testing": "^10.3.10",
