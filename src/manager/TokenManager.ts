@@ -1,40 +1,55 @@
+import { Log } from "../decorator/Log";
 import { TokenModel } from "../model/TokenModel";
-import { UserRole } from "../model/UserRole";
+import { UserTokenModel } from "../model/UserTokenModel";
+import { generateRandomString } from "../utils/StringUtils";
 
 export class TokenManager {
-    private static instance: TokenManager;
+  private static instance: TokenManager;
 
-    private constructor() {}
+  private constructor() {}
 
-    private tokenList: TokenModel[] = []
+  private tokenList: TokenModel[] = [];
 
-    public static getInstance(): TokenManager {
-        if (!TokenManager.instance) {
-            TokenManager.instance = new TokenManager();
-        }
-        return TokenManager.instance;
+  public static getInstance(): TokenManager {
+    if (!TokenManager.instance) {
+      TokenManager.instance = new TokenManager();
     }
+    return TokenManager.instance;
+  }
 
-    public createToken(app: string): TokenModel {
-        const token = this.generateToken(app);
-        this.tokenList.push(token);
-        return token;
-    }
+  @Log
+  public createToken(user: UserTokenModel): TokenModel {
+    const token = this.generateToken(user);
+    this.tokenList.push(token);
+    return token;
+  }
 
-    public deleteToken(tokenKey: string): void {
-        const newTokenList = this.tokenList.filter(token => token.key !== tokenKey)
-        this.tokenList = newTokenList;
-    }
+  @Log
+  public deleteToken(tokenKey: string): void {
+    const newTokenList = this.tokenList.filter(
+      (token) => token.key !== tokenKey
+    );
+    this.tokenList = newTokenList;
+  }
 
-    public readTokenList(): TokenModel[] {
-        return this.tokenList;
-    }
+  @Log
+  public readTokenList(): TokenModel[] {
+    return this.tokenList;
+  }
 
-    private generateToken(app: string): TokenModel {
-        return {
-            key: Math.random().toString(21),
-            role: UserRole.READER,
-            issuer: app,
-          };
-    }
+  @Log
+  public findToken(userCode: string, tokenKey: string): TokenModel {
+    return this.tokenList.filter(
+      (item) => item.userCode === userCode && item.key === tokenKey
+    )[0];
+  }
+
+  private generateToken(user: UserTokenModel): TokenModel {
+    return {
+      key: generateRandomString(36),
+      role: user.role,
+      userCode: user.userCode,
+      issuer: user.app,
+    };
+  }
 }
