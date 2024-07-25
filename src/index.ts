@@ -16,7 +16,6 @@ const tokenFindController = new TokenFindController();
 app.post("/", async (req: Request, res: Response) => {
   try {
     const userToken: UserTokenModel = req.body;
-
     const result = await tokenCreateController.create(userToken);
 
     res.status(200).json(result);
@@ -44,5 +43,5 @@ app.post("/verify", async (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  console.log(`Server ts-auth is running at http://localhost:${port}`);
 });

@@ -19,6 +19,8 @@ export class TokenManager {
 
   @Log
   public createToken(user: UserTokenModel): TokenModel {
+    console.log(`Request generation token by ${user.app} application`);
+    
     const token = this.generateToken(user);
     this.tokenList.push(token);
     return token;
