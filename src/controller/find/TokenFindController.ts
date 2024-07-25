@@ -1,3 +1,4 @@
+import { Auth } from "../../decorator/Auth";
 import { TokenManager } from "../../manager/TokenManager";
 import { TokenModel } from "../../model/TokenModel";
 import { ITokenFindController } from "./ITokenFindController";
@@ -5,6 +6,7 @@ import { ITokenFindController } from "./ITokenFindController";
 export class TokenFindController implements ITokenFindController {
   tokenManager = TokenManager.getInstance();
 
+  @Auth
   async isValid(token: TokenModel): Promise<void> {
     if (this.tokenManager.findToken(token.userCode, token.key) === undefined) {
       throw new Error("Token expired");
