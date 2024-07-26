@@ -1,5 +1,5 @@
-import { TokenModel } from "../../model/TokenModel";
+import { NextFunction, Request, Response } from "express";
 
 export interface ITokenFindController {
-    isValid(token: TokenModel): Promise<void>;
+    isValid(req: Request, res: Response, next: NextFunction): Promise<void>;
 }

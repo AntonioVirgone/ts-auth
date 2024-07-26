@@ -1,10 +1,10 @@
 import { EventEmitter } from "events";
-import { DeleteService } from "../service/delete/DeleteService";
-import { IDeleteService } from "../service/delete/IDeleteService";
+import { ITokenDeleteService } from "../service/token/delete/ITokenDeleteService";
+import { TokenDeleteService } from "../service/token/delete/TokenDeleteService";
 
 export class TokenEventEmitter {
   emitter = new EventEmitter();
-  deleteService: IDeleteService = new DeleteService();
+  deleteService: ITokenDeleteService = new TokenDeleteService();
 
   constructor() {
     // Listener che esegue una funzione quando l'evento viene emesso
