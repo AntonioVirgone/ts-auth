@@ -1,6 +1,6 @@
+import { NextFunction, Request, Response } from "express";
 import { TokenModel } from "../../model/TokenModel";
-import { UserTokenModel } from "../../model/UserTokenModel";
 
 export interface ITokenCreateController {
-    create(user: UserTokenModel): Promise<TokenModel>
+    create(req: Request, res: Response, next: NextFunction): Promise<TokenModel>
 }

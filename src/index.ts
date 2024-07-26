@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { TokenCreateController } from "./controller/create/TokenCreateController";
 import { MessageError } from "./model/MessageError";
 import { UserTokenModel } from "./model/UserTokenModel";
@@ -13,10 +13,9 @@ app.use(express.json());
 const tokenCreateController = new TokenCreateController();
 const tokenFindController = new TokenFindController();
 
-app.post("/", async (req: Request, res: Response) => {
+app.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userToken: UserTokenModel = req.body;
-    const result = await tokenCreateController.create(userToken);
+    const result = await tokenCreateController.create(req, res, next);
 
     res.status(200).json(result);
   } catch (error) {
@@ -28,10 +27,9 @@ app.post("/", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/verify", async (req: Request, res: Response) => {
+app.post("/verify", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userToken: TokenModel = req.body;
-    await tokenFindController.isValid(userToken);
+    await tokenFindController.isValid(req, res, next);
     res.status(200).json();
   } catch (error) {
     const merrsageError: MessageError = new MessageError(

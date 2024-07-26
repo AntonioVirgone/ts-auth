@@ -1,21 +1,21 @@
+import { NextFunction, Request, Response } from "express";
 import { TokenModel } from "../../model/TokenModel";
 import { ITokenCreateController } from "./ITokenCreateController";
-import { TokenManager } from "../../manager/TokenManager";
-import { TokenEventEmitter } from "../../emitter/TokenEventEmitter";
 import { UserTokenModel } from "../../model/UserTokenModel";
-import { CheckUserRole } from "../../decorator/CheckUserDecorator";
 import { Auth } from "../../decorator/Auth";
+import { ITokenCreateService } from "../../service/token/create/ITokenCreateService";
+import { TokenCreateService } from "../../service/token/create/TokenCreateService";
 
 export class TokenCreateController implements ITokenCreateController {
-  tokenManager: TokenManager = TokenManager.getInstance();
-  tokenEventEmitter = new TokenEventEmitter();
+  createService: ITokenCreateService = new TokenCreateService();
 
   @Auth
-  @CheckUserRole
-  async create(user: UserTokenModel): Promise<TokenModel> {
-    const token = this.tokenManager.createToken(user);
-    this.tokenEventEmitter.expire(60000, token.key);
-
-    return token;
+  async create(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<TokenModel> {
+    const user: UserTokenModel = req.body;
+    return await this.createService.create(user);
   }
 }
