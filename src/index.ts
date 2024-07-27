@@ -1,9 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import { TokenCreateController } from "./controller/create/TokenCreateController";
-import { MessageError } from "./model/MessageError";
-import { UserTokenModel } from "./model/UserTokenModel";
 import { TokenFindController } from "./controller/find/TokenFindController";
-import { TokenModel } from "./model/TokenModel";
+import { MessageError } from "ts-av-common";
 
 const app = express();
 const port = 3020;
