@@ -1,1 +1,1 @@
-export const EXPIRATION_TOKEN = 60000;
+export const EXPIRATION_TOKEN = 300000; // 5 minutes
