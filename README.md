@@ -26,6 +26,11 @@ Istruzioni Docker
 docker build -t ts-auth .
 docker run --name ts-auth-container -d -p 3020:3020 ts-auth
 
+Update image
+docker build -t ts-auth .
+docker stop ts-auth-container
+docker rm ts-auth-container
+docker run --name ts-auth-container -d -p 3020:3020 ts-auth
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
